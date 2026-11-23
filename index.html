@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinTech Course · Prof. Priyadarshi Dutta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0A1628;
+      --teal: #1D9E75;
+      --teal-light: #5DCAA5;
+      --teal-bg: #E1F5EE;
+      --teal-dark: #0F6E56;
+      --text-primary: #1A1A2E;
+      --text-secondary: #5A6070;
+      --border: #E2E6EE;
+      --bg: #F7F9FC;
+      --card-bg: #ffffff;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      padding: 2.75rem 2.5rem 2.25rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 220px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 18px,
+        rgba(29,158,117,0.07) 18px, rgba(29,158,117,0.07) 19px
+      );
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 24px;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--text-secondary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    /* SKILLS */
+    .skills {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .skills-intro {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 0.6rem;
+    }
+    .skills ol {
+      list-style: none;
+      counter-reset: skill;
+    }
+    .skills li {
+      counter-increment: skill;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.65;
+      padding: 0.35rem 0;
+    }
+    .skills li + li { border-top: 0.5px solid var(--border); }
+    .skills li::before {
+      content: counter(skill, decimal-leading-zero);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--teal-dark);
+      padding-top: 3px;
+    }
+
+    /* TIMELINE */
+    .timeline { position: relative; }
+
+    .block {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0 1.25rem;
+      position: relative;
+    }
+
+    .spine-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding-top: 6px;
+    }
+
+    .block:not(:last-child) .spine-cell::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+      transform: translateX(-50%);
+    }
+
+    .node {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 1.2;
+      text-align: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .node.regular  { background: var(--teal-bg);  color: var(--teal-dark); border: 1px solid var(--teal-light); }
+    .node.project  { background: var(--teal);      color: #fff;             border: none; }
+    .node.activity { background: var(--navy);      color: var(--teal);      border: 1.5px solid var(--teal); }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 14px;
+    }
+    .card.is-project {
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .card.is-activity {
+      border-left: 3px solid var(--navy);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      border: 0.5px solid var(--border);
+      background: var(--bg);
+      color: var(--text-secondary);
+    }
+    .pill.project  { background: var(--teal-bg);  color: var(--teal-dark); border-color: var(--teal-light); }
+    .pill.activity { background: var(--navy);      color: var(--teal);      border-color: var(--teal); }
+
+    .badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .badge.gp { background: var(--teal-bg); color: var(--teal-dark); }
+    .badge.ca { background: var(--navy);    color: var(--teal); }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .copyright {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .legend-dot.regular  { background: var(--teal-light); }
+    .legend-dot.project  { background: var(--teal); }
+    .legend-dot.activity { background: var(--navy); border: 1px solid var(--teal); }
+
+    @media (max-width: 540px) {
+      .block { grid-template-columns: 60px 1fr; gap: 0 0.75rem; }
+      .node  { width: 38px; height: 38px; font-size: 9px; }
+      .hero  { padding: 2rem 1.25rem 1.75rem; }
+      .hero h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="hero">
+      <p class="hero-eyebrow">Course outline · 13 sessions</p>
+      <h1>Financial Technologies<br>(FinTech)</h1>
+      <p class="hero-sub">Prof. Priyadarshi Dutta</p>
+    </div>
+
+    <p class="section-label">Demonstrable skills</p>
+
+    <div class="skills">
+      <p class="skills-intro">Upon completion of the course, students will be able to demonstrate:</p>
+      <ol>
+        <li>The ability to build prototypes and proofs of concept, applying FinTech concepts learned in class, that solve real-life business problems.</li>
+        <li>A foundation for designing lending apps, including the type of information that should be collected from the borrower.</li>
+        <li>Knowledge of the regulatory landscape governing FinTech in India.</li>
+      </ol>
+    </div>
+
+    <p class="section-label">Session map</p>
+
+    <div class="timeline">
+
+      <!-- S01 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">01</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Laying the foundation for the course</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">Why is this course being taught? What will be taught &amp; how? How will assessments be made? How will this course help in professional life? Expectations from the students.</p>
+        </div>
+      </div>
+
+      <!-- S02 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">02</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">The fundamentals of FinTech</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">What is meant by FinTech? Origination and evolution across the globe. Why has it proliferated in recent times? A few global FinTech case studies.</p>
+        </div>
+      </div>
+
+      <!-- S03–04 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">03–04</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Introduction to the concepts of Blockchain, Cryptocurrency, Encryption</span>
+            <span class="pill">2 sessions</span>
+          </div>
+          <p class="card-body">Introduction to the concepts of Blockchain, Cryptocurrency, Encryption (Parts 1 &amp; 2).</p>
+        </div>
+      </div>
+
+      <!-- S05–06 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">05–06</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Introduction to the India Tech Stack</span>
+            <span class="pill">2 sessions</span>
+          </div>
+          <p class="card-body">Introduction to the India Tech Stack (Aadhaar, UPI, DigiLocker) — Parts 1 &amp; 2.</p>
+        </div>
+      </div>
+
+      <!-- S07 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">07</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">FinTech in India (Part 1)</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">Different types of FinTechs in India and overview of their business models. FinTech Lending: Difference between FinTechs, NBFCs and Banks. Concept of alternate data. Key trends in FinTech industry.</p>
+        </div>
+      </div>
+
+      <!-- S08 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">08</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">FinTech in India (Part 2) and commonly used Credit Risk metrics</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">Introduction to commonly used Credit Risk metrics and their applications — Delinquency rates, GNPA, NNPA, Provisions, Slippages. Concept of Cohort Analysis / Vintage Analysis.</p>
+        </div>
+      </div>
+
+      <!-- S09 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">09</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">How does a FinTech Lending Company operate? (Micro level view)</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">Functions of different departments, customer journey on the app, which department is responsible for what?</p>
+        </div>
+      </div>
+
+      <!-- S10 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">10</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Recent innovations in the FinTech sector</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">Recent innovations in the FinTech sector (e.g. ULI, RBI Sandbox).</p>
+        </div>
+      </div>
+
+      <!-- S11 GROUP PROJECT -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node project">11</div>
+        </div>
+        <div class="card is-project">
+          <span class="badge gp">Group project</span>
+          <div class="card-head">
+            <span class="card-title">Blockchain use-case prototype · Group presentation</span>
+            <span class="pill project">1 session</span>
+          </div>
+          <p class="card-body">Each group builds a working web application that demonstrates an application / use case of the key concepts of Blockchain to solve a real problem. The problem could be anything a student identifies — even difficulties faced in hostel life — provided there is a reasonable use case for Blockchain in solving it.</p>
+        </div>
+      </div>
+
+      <!-- S12 CLASS ACTIVITY -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node activity">12</div>
+        </div>
+        <div class="card is-activity">
+          <span class="badge ca">Class activity</span>
+          <div class="card-head">
+            <span class="card-title">Regulatory environment and an RBI-styled supervisory exam simulation</span>
+            <span class="pill activity">1 session</span>
+          </div>
+          <p class="card-body">Regulatory environment in the Indian FinTech space, followed by a simulation of an RBI-styled supervisory examination.</p>
+        </div>
+      </div>
+
+      <!-- S13 -->
+      <div class="block">
+        <div class="spine-cell">
+          <div class="node regular">13</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Wrap up</span>
+            <span class="pill">1 session</span>
+          </div>
+          <p class="card-body">What were the key takeaways. Q &amp; A session.</p>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+
+    <div class="footer">
+      <span class="copyright">© Priyadarshi Dutta · FinTech Course</span>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot regular"></div> Content session</div>
+        <div class="legend-item"><div class="legend-dot project"></div> Group project</div>
+        <div class="legend-item"><div class="legend-dot activity"></div> Class activity</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
